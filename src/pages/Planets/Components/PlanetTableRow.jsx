@@ -1,15 +1,18 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
-import { useDispatch } from 'react-redux';
-import { push } from 'connected-react-router';
+import {useDispatch} from 'react-redux';
+import {push} from 'connected-react-router';
+import useDoubleClick from "../../../hooks/useDoubleClick";
 
 export const PlanetTableRow = ({ row, id }) => {
   const dispatch = useDispatch();
+    const [refCallback] = useDoubleClick(() => dispatch(push(`/planets/${id}`)));
+
   return (
     <TableRow
       sx={{ cursor: 'pointer' }}
-      onDoubleClick={() => dispatch(push(`/planets/${id}`))}
+      ref={refCallback}
       key={row.name}>
       <TableCell component="th" scope="row">
         {row.name}
